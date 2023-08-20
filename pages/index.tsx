@@ -1,6 +1,6 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {AsteroidList} from '../src/Components/AsteroidLIst/AsteroidList';
 import {API_KEY} from '../src/consts/apiKey';
 import cls from '../styles/Home.module.css';
@@ -14,23 +14,24 @@ const Home: NextPage = (props: ApiResponse) => {
         .reverse()
         .join('-'));
 
-    const increaseDateByWeek = useCallback(() => {
-        const newDate = new Date(startDate);
-        newDate.setDate(newDate.getDate() + 7);
-        setStartDate(newDate
-            .toLocaleDateString()
-            .split('.')
-            .reverse()
-            .join('-'));
-    }, []);
+    console.log(props);
 
     useEffect(() => {
+        const increaseDateByWeek = () => {
+            const newDate = new Date(startDate);
+            newDate.setDate(newDate.getDate() + 1);
+            setStartDate(newDate
+                .toLocaleDateString()
+                .split('.')
+                .reverse()
+                .join('-'));
+        };
         const data = Object.values(props.near_earth_objects);
         const result = [];
         data.forEach(obj => result.push(...obj));
         setContent(result);
         increaseDateByWeek();
-    }, [increaseDateByWeek, props.near_earth_objects]);
+    }, [props.near_earth_objects]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -87,7 +88,14 @@ export const getServerSideProps = async () => {
         .reverse()
         .join('-');
 
-    const response = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&api_key=${API_KEY}`);
+    const tomor = new Date();
+    tomor.setDate(tomor.getDate() + 1);
+    const tomorrow = tomor.toLocaleDateString()
+        .split('.')
+        .reverse()
+        .join('-');
+
+    const response = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${tomorrow}&api_key=${API_KEY}`);
     const data = await response.json();
 
     return {

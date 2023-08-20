@@ -41,7 +41,7 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
                 </div>
                 {
                     asteroids.map(asteroid => (
-                            <AsteroidCard key={asteroid.id} distanceType={distanceType} asteroid={asteroid}/>
+                            <AsteroidCard key={asteroid.neo_reference_id} distanceType={distanceType} asteroid={asteroid}/>
                         )
                     )
                 }
