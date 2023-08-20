@@ -1,0 +1,14 @@
+.wrapper {
+    color: var(--white-color);
+    width: 100%;
+    padding: 16px;
+}
+
+.headerName {
+    color: var(--orange-base, #F86600);
+    font-family: Passion One, sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

@@ -1,0 +1,67 @@
+.AsteroidCard {
+    color: var(--white-color);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.header {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+.distance {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.distanceText {
+    width: 100%;
+    /*text-align: center;*/
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+.asteroidData {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.distanceArrow {
+    margin: 0;
+    position: relative;
+    left: -10px;
+}
+
+.bottomCard {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 2px 11px;
+    border-radius: 16px;
+    border: none;
+    background-color: var(--orange-smooth);
+    color: var(--orange-base);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 181.818% */
+    letter-spacing: 1px;
+}
+
+.AsteroidName {
+    display: flex;
+    flex-direction: column;
+}
+.name {
+
+}
