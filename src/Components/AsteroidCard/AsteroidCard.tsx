@@ -1,15 +1,16 @@
 import Image from 'next/image';
+import {memo, useState} from 'react';
 import {DistanceType} from '../../Model/DistanceType';
 import cls from './AsteroidCard.module.css';
-import {memo, useState} from 'react';
+
 interface AsteroidInterface {
-    asteroid: NearEarthObject
-    distanceType: DistanceType
+    asteroid: NearEarthObject;
+    distanceType: DistanceType;
+    onSelectAsteroid: (id: string, isItemSelected: boolean) => void;
 }
 
-
 const Asteroid = (props: AsteroidInterface) => {
-    const distanceType = props.distanceType
+    const {distanceType, onSelectAsteroid} = props;
     const {
         close_approach_data,
         estimated_diameter,
@@ -23,27 +24,28 @@ const Asteroid = (props: AsteroidInterface) => {
             day: 'numeric',
             month: 'short',
             year: 'numeric'
-        })
-    const distanceKm = close_approach_data[0].miss_distance.kilometers
-    const distanceLunar = close_approach_data[0].miss_distance.lunar
+        });
+    const distanceKm = close_approach_data[0].miss_distance.kilometers;
+    const distanceLunar = close_approach_data[0].miss_distance.lunar;
 
-    const onSelectAsteroid = () => {
-        setSelected(true)
-    }
+    const onSelect = () => {
+        setSelected(prevState => !prevState);
+        onSelectAsteroid(id, selected);
+    };
 
-    const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты'
+    const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты';
 
     return (
-        <section className={cls.AsteroidCard}>
+        <section data-testid={'listitem'} className={cls.AsteroidCard}>
             <h2 className={cls.header}>{date}</h2>
             <div className={cls.asteroidData}>
                 <div className={cls.distance}>
-                    <div className={cls.distanceText}>
+                    <div data-testid={'distance-type'} className={cls.distanceText}>
                         {Math.round(Number(distanceType === 'km' ? distanceKm : distanceLunar)) + distanceIdentifier}
                     </div>
                     <Image className={cls.distanceArrow} src={'/Arrow.svg'} width={130} height={5} alt={'стрелка'}/>
                 </div>
-                <Image src={'/asteroid.png'} alt={'астероид'} height={40} width={40} />
+                <Image src={'/asteroid.png'} alt={'астероид'} height={40} width={40}/>
                 <div className={cls.AsteroidName}>
                     <div className={cls.name}>{name}</div>
                     <div>Ø {Math.round(estimated_diameter.meters.estimated_diameter_max)} м</div>
@@ -52,14 +54,15 @@ const Asteroid = (props: AsteroidInterface) => {
             </div>
             <div className={cls.bottomCard}>
                 <button
-                    onClick={onSelectAsteroid}
+                    onClick={onSelect}
                     className={cls.button}>
                     {selected ? 'В КОРЗИНЕ' : 'ЗАКАЗАТЬ'}
                 </button>
-                {is_potentially_hazardous_asteroid && <Image src={'/warning.svg'} width={67} height={20} alt={'Опасен'}/>}
+                {is_potentially_hazardous_asteroid &&
+					<Image src={'/warning.svg'} width={67} height={20} alt={'Опасен'}/>}
             </div>
         </section>
     );
 };
 
-export const AsteroidCard = memo(Asteroid)
+export const AsteroidCard = memo(Asteroid);

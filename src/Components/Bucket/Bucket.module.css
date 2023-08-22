@@ -1,0 +1,64 @@
+.Bucket {
+    position: sticky;
+    top: var(--header-height);
+    width: 150px;
+    padding: 16px;
+    border-radius: 24px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    row-gap: 32px;
+    flex-wrap: wrap;
+
+    background: var(--gray-bg);
+
+    font-family: Helvetica, serif;
+    font-style: normal;
+}
+
+.mobile {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100vw;
+    padding: 16px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    background: var(--gray-bg);
+
+    font-family: Helvetica, serif;
+    font-style: normal;
+
+    z-index: 100;
+}
+
+.header {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.info {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.button {
+    display: flex;
+    height: 48px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    border-radius: 40px;
+    background: var(--orange-base, #F86600);
+
+}
+

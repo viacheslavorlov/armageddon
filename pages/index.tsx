@@ -1,9 +1,12 @@
 import axios from 'axios';
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import {memo, useEffect, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {AsteroidList} from '../src/Components/AsteroidLIst/AsteroidList';
+import {Bucket} from '../src/Components/Bucket/Bucket';
 import {Loader} from '../src/Components/Loader/Loader';
+import {SELECTED_ASTEROIDS} from '../src/consts/localStorageKeys';
+import {increaseDateByDay} from '../src/helpers/increasDateByDay';
 import cls from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -12,12 +15,7 @@ const Home: NextPage = () => {
     const [startDate, setStartDate] = useState(
         new Date().toLocaleDateString().split('.').reverse().join('-')
     );
-
-    const increaseDateByDay = (dateString: string, day: number = 1) => {
-        const newDate = new Date(dateString);
-        newDate.setDate(newDate.getDate() + day);
-        return newDate.toLocaleDateString().split('.').reverse().join('-');
-    };
+    const [selected, setSelected] = useState<string[]>([]);
 
     const fetchData = async () => {
         setIsFetching(true);
@@ -36,6 +34,7 @@ const Home: NextPage = () => {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
         const innerHeight = window.innerHeight;
+
         if (scrollHeight - (scrollTop + innerHeight) <= 350 && !isFetching) {
             console.log('scroll');
             setIsFetching(true);
@@ -52,13 +51,21 @@ const Home: NextPage = () => {
         }
     };
 
+    const onSelectAsteroid = useCallback((id, isItemSelect) =>{
+        if (!isItemSelect) {
+            setSelected(prevState => [...prevState, id])
+            sessionStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify([...selected, id]))
+        } else {
+            setSelected(prevState => prevState.filter(item => item !== id))
+            sessionStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify(selected.filter(item => item !== id)))
+        }
+    }, [selected])
+
     useEffect(() => {
         fetchData();
     }, []);
-
+    
     useEffect(() => {
-        
-
         const handleScroll = () => fetchDataByScroll(startDate);
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -72,36 +79,13 @@ const Home: NextPage = () => {
                 <meta name="description" content="Квартирка тестовое задание"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <main className={'main'}>
-                <AsteroidList asteroids={content}/>
+            <main className={cls.main}>
+                <AsteroidList onSelect={onSelectAsteroid} asteroids={content}/>
                 {isFetching && <Loader className={cls.loader}/>}
             </main>
-
+            <Bucket className={cls.bucket} selected={selected}/>
         </div>
     );
 };
 
 export default memo(Home);
-//
-// export const getServerSideProps = async () => {
-//     const today = new Date()
-//         .toLocaleDateString()
-//         .split('.')
-//         .reverse()
-//         .join('-');
-//
-//     const tomor = new Date();
-//     tomor.setDate(tomor.getDate() + 1);
-//     const tomorrow = tomor.toLocaleDateString()
-//         .split('.')
-//         .reverse()
-//         .join('-');
-//
-//
-//     const response = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${tomorrow}&api_key=${API_KEY}`);
-//     const data = await response.json();
-//
-//     return {
-//         props: data
-//     };
-// };

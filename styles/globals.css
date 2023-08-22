@@ -16,9 +16,9 @@ body {
     background-color: black;
 }
 
-/*.image {*/
-/*    position: fixed;*/
-/*}*/
+.image {
+    z-index: 0;
+}
 
 .imageWrapper {
     position: fixed;

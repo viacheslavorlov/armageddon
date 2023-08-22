@@ -6,10 +6,12 @@
 
 .main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 24px;
     margin-top: 24px;
+    z-index: 1;
 }
 
 .trigger {
@@ -20,4 +22,9 @@
 
 .loader {
     margin: 20px;
+}
+
+.bucket {
+    justify-self: flex-start;
+    align-self: flex-start;
 }

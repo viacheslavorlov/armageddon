@@ -1,0 +1,10 @@
+.Footer {
+    position: relative;
+    bottom: 0;
+    margin-left: 33%;
+    color: var(--white-color, #FFF);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}

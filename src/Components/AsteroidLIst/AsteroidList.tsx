@@ -7,11 +7,12 @@ import cls from './AsteroidList.module.css';
 interface AsteroidListPrors {
     className?: string;
     asteroids: NearEarthObject[];
+    onSelect: (id: string, isItemSelected: boolean) => void;
 }
 
 export const AsteroidListU = (props: AsteroidListPrors) => {
     const {
-        className, asteroids
+        className, asteroids, onSelect
     } = props;
 
     const [distanceType, setDistanceType] = useState<DistanceType>('km');
@@ -26,6 +27,7 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
                 <h2 className={cls.header}>Ближайшие подлеты астероидов</h2>
                 <div className={cls.buttonWrapper}>
                     <button
+                        data-testid={'buttonkm'}
                         onClick={() => onChangeDistanceType('km')}
                         className={classNames(cls.button, distanceType === 'km' && cls.active)}
                     >
@@ -41,7 +43,12 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
                 </div>
                 {
                     asteroids.map((asteroid, i) => (
-                            <AsteroidCard key={asteroid.neo_reference_id + i} distanceType={distanceType} asteroid={asteroid}/>
+                            <AsteroidCard
+                                key={asteroid.neo_reference_id + i}
+                                distanceType={distanceType}
+                                asteroid={asteroid}
+                                onSelectAsteroid={onSelect}
+                            />
                         )
                     )
                 }

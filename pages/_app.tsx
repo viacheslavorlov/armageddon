@@ -1,5 +1,6 @@
 import type {AppProps} from 'next/app';
 import Image from 'next/image';
+import {Footer} from '../src/Components/Footer/Footer';
 import {Header} from '../src/Components/Header/Header';
 import {useWindowSize} from '../src/hooks/useWindowSize';
 import '../styles/globals.css';
@@ -31,6 +32,7 @@ function MyApp({Component, pageProps}: AppProps) {
                 />
             </div>
             <Component {...pageProps} />
+            <Footer />
         </div>
     );
 }
