@@ -17,3 +17,7 @@
     opacity: 0;
     width: 100%;
 }
+
+.loader {
+    margin: 20px;
+}

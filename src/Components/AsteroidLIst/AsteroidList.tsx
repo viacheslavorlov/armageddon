@@ -21,7 +21,7 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
     };
 
     return (
-        <div className={cls.AsteroidList}>
+        <div className={classNames(cls.AsteroidList, className)}>
             <div>
                 <h2 className={cls.header}>Ближайшие подлеты астероидов</h2>
                 <div className={cls.buttonWrapper}>
@@ -40,8 +40,8 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
                     </button>
                 </div>
                 {
-                    asteroids.map(asteroid => (
-                            <AsteroidCard key={asteroid.neo_reference_id} distanceType={distanceType} asteroid={asteroid}/>
+                    asteroids.map((asteroid, i) => (
+                            <AsteroidCard key={asteroid.neo_reference_id + i} distanceType={distanceType} asteroid={asteroid}/>
                         )
                     )
                 }
