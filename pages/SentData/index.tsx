@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {useRouter} from 'next/router';
+import {useEffect, useState} from 'react';
 import {AsteroidList} from '../../src/Components/AsteroidLIst/AsteroidList';
-import {SELECTED_ASTEROIDS} from '../../src/consts/localStorageKeys';
+import {Footer} from '../../src/Components/Footer/Footer';
 import {classNames} from '../../src/helpers/classNames';
+import {useWindowSize} from '../../src/hooks/useWindowSize';
+import {APIResponseSingleAsteroidI} from '../../src/Model/APIRespoyseSigleAsteroid';
 import {DistanceType} from '../../src/Model/DistanceType';
 import cls from './SentData.module.css';
-import {memo, useEffect, useLayoutEffect, useState} from 'react';
-import {APIResponseSingleAsteroidI} from "../../src/Model/APIRespoyseSigleAsteroid";
 
 interface SentDataPrors {
     className?: string;
@@ -16,21 +17,41 @@ const SentData = (props: SentDataPrors) => {
     const {
         className
     } = props;
-    const {query} = useRouter()
-    const {distanceType, selected} = query
+    const [witdth, height] = useWindowSize();
+    const {query} = useRouter();
+    const {distanceType, selected} = query;
     const [selectedAsteroids, setSelectedAsteroids] = useState<APIResponseSingleAsteroidI[]>([]);
 
-    useEffect(() => {
-        const asteridsIds = selected.split(',')
-        console.log(asteridsIds)
-        asteridsIds.forEach(async (id: string) => {
-            const response = await axios.get<APIResponseSingleAsteroidI>(`api/fetchSingleAsteroid?id=${id}`)
-            setSelectedAsteroids(prevState => [...prevState, response.data])
-        })
-    }, [])
+    const fetchResult = async () => {
+        const result = await axios.get<APIResponseSingleAsteroidI>(`api/fetchSingleAsteroid?id=${selected}`)
+        setSelectedAsteroids([result.data])
+    }
+
+    const mobile = witdth <= height || witdth < 860;
+
+    useEffect( () => {
+        console.log(selected);
+        if (Array.isArray(selected)) {
+            const promises = selected?.map((id: string) => axios.get<APIResponseSingleAsteroidI>(`api/fetchSingleAsteroid?id=${id}`));
+            Promise.all(promises)
+                .then((results) => {
+                    // @ts-ignore
+                    setSelectedAsteroids(results.map(item => item.data));
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+        if (typeof selected === 'string') {
+           fetchResult()
+        }
+
+
+    }, [selected]);
 
     return (
-        <main className={classNames(cls.SentData, className, cls.mobile)}>
+        <>
+        <main className={classNames(cls.SentData, className, mobile ? cls.mobile : '')}>
             <AsteroidList
                 buttonsNeeded={false}
                 label={'Заказ отправлен'}
@@ -38,7 +59,9 @@ const SentData = (props: SentDataPrors) => {
                 distanceType={distanceType as DistanceType}
             />
         </main>
+        <Footer/>
+        </>
     );
 };
 
-export default SentData
+export default SentData;

@@ -1,5 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import {memo, useState} from 'react';
+import {findClosestDate} from '../../helpers/findClosestDate';
 import {DistanceType} from '../../Model/DistanceType';
 import cls from './AsteroidCard.module.css';
 
@@ -20,12 +22,7 @@ const Asteroid = (props: AsteroidInterface) => {
         name
     } = props.asteroid;
     const [selected, setSelected] = useState(false);
-    const date = new Date(close_approach_data[0].close_approach_date)
-        .toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-        });
+    const date = findClosestDate(close_approach_data)
     const distanceKm = close_approach_data[0].miss_distance.kilometers;
     const distanceLunar = close_approach_data[0].miss_distance.lunar;
 
@@ -48,7 +45,7 @@ const Asteroid = (props: AsteroidInterface) => {
                 </div>
                 <Image src={'/asteroid.png'} alt={'астероид'} height={40} width={40}/>
                 <div className={cls.AsteroidName}>
-                    <div className={cls.name}>{name}</div>
+                    <Link href={`/asteroid-page/${id}`} className={cls.name}>{name}</Link>
                     <div>Ø {Math.round(estimated_diameter.meters.estimated_diameter_max)} м</div>
                 </div>
 

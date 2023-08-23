@@ -1,6 +1,7 @@
 
+import Link from 'next/link';
 import {useRouter} from 'next/router';
-import {memo, useEffect, useLayoutEffect, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {classNames} from '../../helpers/classNames';
 import {useWindowSize} from '../../hooks/useWindowSize';
 import {DistanceType} from '../../Model/DistanceType';
@@ -36,19 +37,10 @@ const BucketComponent = (props: BucketPrors) => {
         }
     };
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         setMobile(width <= height)
     }, [height, width])
 
-    const onSentAsteroids = () => {
-        router.push('SentData', {
-            pathname: 'SentData',
-            query: {
-                distanceType: distanceType,
-                selected: selected.join(',')
-            },
-        })
-    }
 
     return (
         <div className={classNames(className, (mobile || width < 880) ? cls.mobile : cls.Bucket)}>
@@ -59,7 +51,7 @@ const BucketComponent = (props: BucketPrors) => {
                 </div>
             </div>
 
-            <button onClick={onSentAsteroids} className={cls.button}>Отправить</button>
+            <Link className={cls.button} href={{pathname: 'SentData', query: {selected, distanceType}}}>Отправить</Link>
         </div>
     );
 };

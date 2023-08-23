@@ -18,7 +18,7 @@ function MyAppComponent({Component, pageProps}: AppProps) {
             <div className={'imageWrapper ' + mobileWith}>
                 <Image className={'image'}
                        sizes={mobile
-                           ? '(max-height: 436px) (max-width: 48px)'
+                           ? '(max-height: 500px) (max-width: 48px)'
                            : '(max-height: 768px) (max-width: 536px)'
                        }
                        layout={'responsive'}
@@ -33,7 +33,6 @@ function MyAppComponent({Component, pageProps}: AppProps) {
                 />
             </div>
             <Component {...pageProps} />
-            <Footer/>
         </div>
     );
 }
