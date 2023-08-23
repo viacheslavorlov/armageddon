@@ -1,4 +1,4 @@
-import {memo, useState} from 'react';
+import {memo} from 'react';
 import {classNames} from '../../helpers/classNames';
 import {DistanceType} from '../../Model/DistanceType';
 import {AsteroidCard} from '../AsteroidCard/AsteroidCard';
@@ -7,19 +7,20 @@ import cls from './AsteroidList.module.css';
 interface AsteroidListPrors {
     className?: string;
     asteroids: NearEarthObject[];
-    onSelect: (id: string, isItemSelected: boolean) => void;
+    onSelect?: (id: string, isItemSelected: boolean) => void;
+    distanceType: DistanceType;
+    onChangeDistanceType?: (type: DistanceType) => void;
 }
 
 export const AsteroidListU = (props: AsteroidListPrors) => {
     const {
-        className, asteroids, onSelect
+        className,
+        asteroids,
+        onSelect,
+        onChangeDistanceType,
+        distanceType
     } = props;
 
-    const [distanceType, setDistanceType] = useState<DistanceType>('km');
-
-    const onChangeDistanceType = (distanceType) => {
-        setDistanceType(distanceType);
-    };
 
     return (
         <div className={classNames(cls.AsteroidList, className)}>

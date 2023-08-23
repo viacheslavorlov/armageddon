@@ -1,0 +1,15 @@
+.SentData {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-left: 30%;
+    color: var(--white-color, #FFF);
+    font-family: Helvetica, serif;
+}
+
+.header {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px;
+}

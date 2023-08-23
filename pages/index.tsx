@@ -7,6 +7,7 @@ import {Bucket} from '../src/Components/Bucket/Bucket';
 import {Loader} from '../src/Components/Loader/Loader';
 import {SELECTED_ASTEROIDS} from '../src/consts/localStorageKeys';
 import {increaseDateByDay} from '../src/helpers/increasDateByDay';
+import {DistanceType} from '../src/Model/DistanceType';
 import cls from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
@@ -16,6 +17,12 @@ const Home: NextPage = () => {
         new Date().toLocaleDateString().split('.').reverse().join('-')
     );
     const [selected, setSelected] = useState<string[]>([]);
+
+    const [distanceType, setDistanceType] = useState<DistanceType>('km');
+
+    const onChangeDistanceType = (distanceType) => {
+        setDistanceType(distanceType);
+    };
 
     const fetchData = async () => {
         setIsFetching(true);
@@ -80,10 +87,15 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <main className={cls.main}>
-                <AsteroidList onSelect={onSelectAsteroid} asteroids={content}/>
+                <AsteroidList
+                    onChangeDistanceType={onChangeDistanceType}
+                    distanceType={distanceType}
+                    onSelect={onSelectAsteroid}
+                    asteroids={content}
+                />
                 {isFetching && <Loader className={cls.loader}/>}
             </main>
-            <Bucket className={cls.bucket} selected={selected}/>
+            <Bucket distanceType={'lunar'} className={cls.bucket} selected={selected}/>
         </div>
     );
 };

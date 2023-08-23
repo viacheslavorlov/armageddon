@@ -121,7 +121,7 @@ describe('AsteroidList', () => {
         expect(lunarButton).toBeInTheDocument();
     });
 
-    test('должен при клике на кнопку Киллметрый переводить расстояние в километры', async () => {
+    test('должен при клике на кнопку "в киллометрах" переводить расстояние в километры', async () => {
         render(
             <AsteroidList asteroids={mockAsteroids} onSelect={() => {
             }}/>

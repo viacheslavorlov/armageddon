@@ -1,18 +1,24 @@
-import {memo, useEffect, useState} from 'react';
+
+import {useRouter} from 'next/router';
+import {memo, useEffect, useLayoutEffect, useState} from 'react';
 import {classNames} from '../../helpers/classNames';
 import {useWindowSize} from '../../hooks/useWindowSize';
+import {DistanceType} from '../../Model/DistanceType';
 import cls from './Bucket.module.css';
 
 interface BucketPrors {
     className?: string;
     selected: string[];
+    distanceType: DistanceType
 }
 
 const BucketComponent = (props: BucketPrors) => {
     const {
-        className, selected
+        className, selected, distanceType
     } = props;
+    const router = useRouter()
     const [width, height] = useWindowSize()
+    const [mobile, setMobile] = useState(width <= height);
 
     const ending = (num: number) => {
         const str = String(num)
@@ -30,8 +36,16 @@ const BucketComponent = (props: BucketPrors) => {
         }
     };
 
+    useLayoutEffect(() => {
+        setMobile(width <= height)
+    }, [height, width])
+
+    const onSentAsteroids = () => {
+        router.push('SentData', {query: {distanceType: distanceType}})
+    }
+
     return (
-        <div className={classNames(className, (width <= height || width < 900) ? cls.mobile : cls.Bucket)}>
+        <div className={classNames(className, (mobile || width < 880) ? cls.mobile : cls.Bucket)}>
             <div>
                 <h3 className={cls.header}>Корзина</h3>
                 <div className={cls.info}>
@@ -39,7 +53,7 @@ const BucketComponent = (props: BucketPrors) => {
                 </div>
             </div>
 
-            <button className={cls.button}>Отправить</button>
+            <button onClick={onSentAsteroids} className={cls.button}>Отправить</button>
         </div>
     );
 };

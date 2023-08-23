@@ -1,16 +1,17 @@
 import type {AppProps} from 'next/app';
 import Image from 'next/image';
+import {memo} from 'react';
 import {Footer} from '../src/Components/Footer/Footer';
 import {Header} from '../src/Components/Header/Header';
 import {useWindowSize} from '../src/hooks/useWindowSize';
 import '../styles/globals.css';
 
 
-function MyApp({Component, pageProps}: AppProps) {
+function MyAppComponent({Component, pageProps}: AppProps) {
     const [width, height] = useWindowSize();
     const mobile = width < height;
 
-    const mobileWith =  mobile ? 'mobile' : ''
+    const mobileWith = mobile ? 'mobile' : '';
     return (
         <div className={'wrap'}>
             <Header/>
@@ -22,7 +23,7 @@ function MyApp({Component, pageProps}: AppProps) {
                        }
                        layout={'responsive'}
                        width={mobile ? 48 : 536}
-                       height={mobile ? 436: 620}
+                       height={mobile ? 436 : 620}
                        src={
                            mobile
                                ? '/planeta_zemlia_mobile3.png'
@@ -32,9 +33,11 @@ function MyApp({Component, pageProps}: AppProps) {
                 />
             </div>
             <Component {...pageProps} />
-            <Footer />
+            <Footer/>
         </div>
     );
 }
 
+const MyApp = memo(MyAppComponent);
 export default MyApp;
+
