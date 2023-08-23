@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {useRouter} from 'next/router';
 import {AsteroidList} from '../../src/Components/AsteroidLIst/AsteroidList';
 import {SELECTED_ASTEROIDS} from '../../src/consts/localStorageKeys';
@@ -10,7 +11,7 @@ interface SentDataPrors {
     className?: string;
 }
 
-const SentData = memo((props: SentDataPrors) => {
+const SentData = (props: SentDataPrors) => {
     const {
         className
     } = props;
@@ -19,15 +20,19 @@ const SentData = memo((props: SentDataPrors) => {
     const [selectedAsteroids, setSelectedAsteroids] = useState([]);
 
     useEffect(() => {
-        const asteridsIds = localStorage.getItem(SELECTED_ASTEROIDS)
+        const asteridsIds = JSON.parse(localStorage.getItem(SELECTED_ASTEROIDS))
+        asteridsIds.forEach(async (id) => {
+            const response = await axios.get(`api/fetchSingleAsteroid?id=${id}`)
+            await setSelectedAsteroids(prevState => [...prevState, response.data])
+        })
     }, [])
 
     return (
         <main className={classNames(cls.SentData, className)}>
             <h2 className={cls.header}>Заказ отправлен!</h2>
-            <AsteroidList asteroids={} distanceType={distanceType as DistanceType}/>
+            <AsteroidList asteroids={selectedAsteroids} distanceType={distanceType as DistanceType}/>
         </main>
     );
-});
+};
 
 export default SentData

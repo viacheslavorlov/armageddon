@@ -26,14 +26,18 @@ const Home: NextPage = () => {
 
     const fetchData = async () => {
         setIsFetching(true);
-        const endDate = increaseDateByDay(startDate)
-        const response = await axios.get(
-            `api/getData?start_date=${startDate}&end_date=${endDate}`
-        );
-        const result = [];
-        response.data.forEach((item) => result.push(...item));
-        console.log('result', result);
-        setContent(result.reverse());
+        try {
+            const endDate = increaseDateByDay(startDate)
+            const response = await axios.get(
+                `api/getData?start_date=${startDate}&end_date=${endDate}`
+            );
+            const result = [];
+            response.data.forEach((item) => result.push(...item));
+            console.log('result', result);
+            setContent(result.reverse());
+        } catch (e) {
+            console.log(e.message);
+        }
         setIsFetching(false);
     };
 
