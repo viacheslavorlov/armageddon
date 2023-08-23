@@ -20,22 +20,19 @@ const Home: NextPage = () => {
 
     const [distanceType, setDistanceType] = useState<DistanceType>('km');
 
-    const onChangeDistanceType = (distanceType) => {
+    const onChangeDistanceType = (distanceType: DistanceType) => {
         setDistanceType(distanceType);
     };
 
     const fetchData = async () => {
         setIsFetching(true);
         try {
-            const endDate = increaseDateByDay(startDate)
             const response = await axios.get(
-                `api/getData?start_date=${startDate}&end_date=${endDate}`
+                `api/getData?start_date=${startDate}&end_date=${startDate}`
             );
-            const result = [];
-            response.data.forEach((item) => result.push(...item));
-            console.log('result', result);
-            setContent(result.reverse());
-        } catch (e) {
+            console.log('result', response.data);
+            setContent(response.data.reverse());
+        } catch (e: any) {
             console.log(e.message);
         }
         setIsFetching(false);
@@ -53,29 +50,27 @@ const Home: NextPage = () => {
             const response = await axios.get(
                 `api/getData?start_date=${newStartDateString}&end_date=${newStartDateString}`
             );
-            const result = [];
-            response.data.forEach((item) => result.push(...item));
-            console.log('result', result);
-            setContent((prevState) => [...prevState, ...result.reverse()]);
+            console.log('result', response.data);
+            setContent((prevState) => [...prevState, ...response.data.reverse()]);
             setStartDate(newStartDateString);
             setIsFetching(false);
         }
     };
 
-    const onSelectAsteroid = useCallback((id, isItemSelect) =>{
+    const onSelectAsteroid = useCallback((id: string, isItemSelect: boolean) => {
         if (!isItemSelect) {
             setSelected(prevState => [...prevState, id])
-            sessionStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify([...selected, id]))
+            localStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify([...selected, id]))
         } else {
             setSelected(prevState => prevState.filter(item => item !== id))
-            sessionStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify(selected.filter(item => item !== id)))
+            localStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify(selected.filter(item => item !== id)))
         }
     }, [selected])
 
     useEffect(() => {
         fetchData();
     }, []);
-    
+
     useEffect(() => {
         const handleScroll = () => fetchDataByScroll(startDate);
         window.addEventListener('scroll', handleScroll);
@@ -92,6 +87,8 @@ const Home: NextPage = () => {
             </Head>
             <main className={cls.main}>
                 <AsteroidList
+                    buttonsNeeded
+                    label={'Ближайшее время подлета астероидов'}
                     onChangeDistanceType={onChangeDistanceType}
                     distanceType={distanceType}
                     onSelect={onSelectAsteroid}

@@ -15,14 +15,13 @@
 }
 
 .distance {
-    width: auto;
+    max-width: 120px;
     display: flex;
     flex-direction: column;
 }
 
 .distanceText {
-    width: 100%;
-    /*text-align: center;*/
+    max-width: 130px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -35,6 +34,7 @@
 }
 
 .distanceArrow {
+    width: 120px;
     margin: 0;
     position: relative;
     left: -10px;

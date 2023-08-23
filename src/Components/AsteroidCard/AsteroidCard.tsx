@@ -6,11 +6,12 @@ import cls from './AsteroidCard.module.css';
 interface AsteroidInterface {
     asteroid: NearEarthObject;
     distanceType: DistanceType;
-    onSelectAsteroid: (id: string, isItemSelected: boolean) => void;
+    onSelectAsteroid?: (id: string, isItemSelected: boolean) => void;
+    isButtonNeeded?: boolean;
 }
 
 const Asteroid = (props: AsteroidInterface) => {
-    const {distanceType, onSelectAsteroid} = props;
+    const {distanceType, onSelectAsteroid, isButtonNeeded} = props;
     const {
         close_approach_data,
         estimated_diameter,
@@ -30,7 +31,7 @@ const Asteroid = (props: AsteroidInterface) => {
 
     const onSelect = () => {
         setSelected(prevState => !prevState);
-        onSelectAsteroid(id, selected);
+        onSelectAsteroid?.(id, selected);
     };
 
     const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты';
@@ -53,11 +54,11 @@ const Asteroid = (props: AsteroidInterface) => {
 
             </div>
             <div className={cls.bottomCard}>
-                <button
+                {isButtonNeeded && <button
                     onClick={onSelect}
                     className={cls.button}>
                     {selected ? 'В КОРЗИНЕ' : 'ЗАКАЗАТЬ'}
-                </button>
+                </button>}
                 {is_potentially_hazardous_asteroid &&
 					<Image src={'/warning.svg'} width={67} height={20} alt={'Опасен'}/>}
             </div>

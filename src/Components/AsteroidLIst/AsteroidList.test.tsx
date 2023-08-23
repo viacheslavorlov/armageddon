@@ -106,14 +106,15 @@ const mockAsteroids: NearEarthObject[] = [
 describe('AsteroidList', () => {
     test('должен отображать заголовок "Ближайшие подлеты астероидов"', () => {
         render(<AsteroidList asteroids={mockAsteroids} onSelect={() => {
-        }}/>);
+        }} distanceType={'km'}/>);
         //@ts-ignore
         const headerElement = screen.getByText(/Ближайшие подлеты астероидов/i);
         expect(headerElement).toBeInTheDocument();
     });
 
     test('должен отображать кнопки для выбора типа расстояния', () => {
-        render(<AsteroidList asteroids={mockAsteroids} onSelect={() => {
+        render(<AsteroidList
+            distanceType={'km'} asteroids={mockAsteroids} onSelect={() => {
         }}/>);
         const kmButton = screen.getByRole('button', {name: /в километрах/i});
         const lunarButton = screen.getByRole('button', {name: /в лунных орбитах/i});
@@ -123,7 +124,7 @@ describe('AsteroidList', () => {
 
     test('должен при клике на кнопку "в киллометрах" переводить расстояние в километры', async () => {
         render(
-            <AsteroidList asteroids={mockAsteroids} onSelect={() => {
+            <AsteroidList distanceType={'km'}asteroids={mockAsteroids} onSelect={() => {
             }}/>
         );
         //@ts-ignore
@@ -135,7 +136,8 @@ describe('AsteroidList', () => {
     });
 
     test('должен отображать список астероидов', () => {
-        render(<AsteroidList asteroids={mockAsteroids} onSelect={() => {
+        render(<AsteroidList
+            distanceType={'km'} asteroids={mockAsteroids} onSelect={() => {
         }}/>);
         //@ts-ignore
         const asteroidCards = screen.getAllByTestId('listitem');

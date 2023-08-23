@@ -10,10 +10,14 @@ interface AsteroidListPrors {
     onSelect?: (id: string, isItemSelected: boolean) => void;
     distanceType: DistanceType;
     onChangeDistanceType?: (type: DistanceType) => void;
+    label: string;
+    buttonsNeeded: boolean;
 }
 
 export const AsteroidListU = (props: AsteroidListPrors) => {
     const {
+        label,
+        buttonsNeeded,
         className,
         asteroids,
         onSelect,
@@ -25,30 +29,31 @@ export const AsteroidListU = (props: AsteroidListPrors) => {
     return (
         <div className={classNames(cls.AsteroidList, className)}>
             <div>
-                <h2 className={cls.header}>Ближайшие подлеты астероидов</h2>
-                <div className={cls.buttonWrapper}>
+                <h2 className={cls.header}>{label}</h2>
+                {buttonsNeeded && <div className={cls.buttonWrapper}>
                     <button
                         data-testid={'buttonkm'}
-                        onClick={() => onChangeDistanceType('km')}
-                        className={classNames(cls.button, distanceType === 'km' && cls.active)}
+                        onClick={() => onChangeDistanceType && onChangeDistanceType('km')}
+                        className={classNames(cls.button, distanceType === 'km' ? cls.active : '')}
                     >
                         в километрах
                     </button>
                     <span className={cls.divider}>|</span>
                     <button
-                        onClick={() => onChangeDistanceType('lunar')}
-                        className={classNames(cls.button, distanceType === 'lunar' && cls.active)}
+                        onClick={() => onChangeDistanceType && onChangeDistanceType('lunar')}
+                        className={classNames(cls.button, distanceType === 'lunar' ? cls.active : '')}
                     >
                         в лунных орбитах
                     </button>
-                </div>
+                </div>}
                 {
                     asteroids.map((asteroid, i) => (
                             <AsteroidCard
+                                isButtonNeeded={buttonsNeeded}
                                 key={asteroid.neo_reference_id + i}
                                 distanceType={distanceType}
                                 asteroid={asteroid}
-                                onSelectAsteroid={onSelect}
+                                onSelectAsteroid={onSelect ? onSelect : undefined}
                             />
                         )
                     )

@@ -41,7 +41,13 @@ const BucketComponent = (props: BucketPrors) => {
     }, [height, width])
 
     const onSentAsteroids = () => {
-        router.push('SentData', {query: {distanceType: distanceType}})
+        router.push('SentData', {
+            pathname: 'SentData',
+            query: {
+                distanceType: distanceType,
+                selected: selected.join(',')
+            },
+        })
     }
 
     return (

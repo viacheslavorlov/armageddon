@@ -1,4 +1,4 @@
-export interface Root {
+export interface APIResponseSingleAsteroidI {
     links: Links
     id: string
     neo_reference_id: string
