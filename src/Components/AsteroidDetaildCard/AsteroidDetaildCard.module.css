@@ -25,7 +25,9 @@
 
 .closestDate {
     max-width: 130px;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .header {
@@ -39,6 +41,10 @@
     max-width: 120px;
     display: flex;
     flex-direction: column;
+}
+
+.hazard {
+
 }
 
 .distanceText {
