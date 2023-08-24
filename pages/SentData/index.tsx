@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {AsteroidList} from '../../src/Components/AsteroidLIst/AsteroidList';
+import ErrorBoundary from '../../src/Components/ErrorBoundary/ErrorBoundary';
 import {Footer} from '../../src/Components/Footer/Footer';
 import {classNames} from '../../src/helpers/classNames';
 import {useWindowSize} from '../../src/hooks/useWindowSize';
@@ -27,7 +28,7 @@ const SentData = (props: SentDataPrors) => {
         setSelectedAsteroids([result.data])
     }
 
-    const mobile = witdth <= height || witdth < 860;
+    const mobile = witdth <= height || witdth < 1000;
 
     useEffect( () => {
         console.log(selected);
@@ -41,26 +42,24 @@ const SentData = (props: SentDataPrors) => {
                 .catch((error) => {
                     console.error(error);
                 });
-        }
-        if (typeof selected === 'string') {
+        } else {
            fetchResult()
         }
-
 
     }, [selected]);
 
     return (
-        <>
         <main className={classNames(cls.SentData, className, mobile ? cls.mobile : '')}>
+            <ErrorBoundary>
             <AsteroidList
                 buttonsNeeded={false}
-                label={'Заказ отправлен'}
+                label={'Заказ отправлен!'}
                 asteroids={selectedAsteroids}
                 distanceType={distanceType as DistanceType}
             />
+            <Footer className={cls.footer}/>
+            </ErrorBoundary>
         </main>
-        <Footer/>
-        </>
     );
 };
 

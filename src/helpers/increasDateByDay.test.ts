@@ -11,8 +11,8 @@ describe('increaseDateByDay', () => {
         expect(result).toBe('2022-01-06');
     });
 
-    test('должна правильно увеличивать дату на указанное количество дней', () => {
-        const result = increaseDateByDay('2022-12-31', 1);
+    test('должна правильно увеличивать дату на 1 день без второго аргумента', () => {
+        const result = increaseDateByDay('2022-12-31');
         expect(result).toBe('2023-01-01');
     });
 });

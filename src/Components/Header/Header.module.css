@@ -1,8 +1,13 @@
 .wrapper {
     color: var(--white-color);
-    width: 100%;
+    max-width: 300px;
     padding: 16px;
     z-index: 10;
+    text-decoration: none;
+}
+
+.link {
+    text-decoration: none;
 }
 
 .headerName {
@@ -12,5 +17,4 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-
 }

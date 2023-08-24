@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 402px;
     gap: 24px;
     margin-top: 24px;
     z-index: 1;

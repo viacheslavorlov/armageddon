@@ -1,6 +1,4 @@
-
 import Link from 'next/link';
-import {useRouter} from 'next/router';
 import {memo, useEffect, useState} from 'react';
 import {classNames} from '../../helpers/classNames';
 import {useWindowSize} from '../../hooks/useWindowSize';
@@ -17,7 +15,6 @@ const BucketComponent = (props: BucketPrors) => {
     const {
         className, selected, distanceType
     } = props;
-    const router = useRouter()
     const [width, height] = useWindowSize()
     const [mobile, setMobile] = useState(width <= height);
 
@@ -27,11 +24,11 @@ const BucketComponent = (props: BucketPrors) => {
             case '1':
                 return '';
             case '2':
-                return 'a';
+                return 'а';
             case '3':
                 return 'а';
             case '4':
-                return 'a'
+                return 'а'
             default:
                 return 'ов';
         }
@@ -47,7 +44,7 @@ const BucketComponent = (props: BucketPrors) => {
             <div>
                 <h3 className={cls.header}>Корзина</h3>
                 <div className={cls.info}>
-                    {selected.length} астероид{ending(selected.length)}
+                    {`${selected.length} астероид${ending(selected.length)}`}
                 </div>
             </div>
 

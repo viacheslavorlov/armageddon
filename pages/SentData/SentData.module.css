@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin-left: 30%;
     color: var(--white-color, #FFF);
     font-family: Helvetica, serif;
+    padding-left: 5%;
 }
 
 .header {
@@ -16,4 +16,9 @@
 
 .mobile {
     margin-left: 0
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--black-color);
 }

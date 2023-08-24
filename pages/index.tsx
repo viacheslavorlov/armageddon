@@ -5,7 +5,6 @@ import {memo, useCallback, useEffect, useState} from 'react';
 import {AsteroidList} from '../src/Components/AsteroidLIst/AsteroidList';
 import {Bucket} from '../src/Components/Bucket/Bucket';
 import {Loader} from '../src/Components/Loader/Loader';
-import {SELECTED_ASTEROIDS} from '../src/consts/localStorageKeys';
 import {increaseDateByDay} from '../src/helpers/increasDateByDay';
 import {DistanceType} from '../src/Model/DistanceType';
 import cls from '../styles/Home.module.css';
@@ -60,10 +59,8 @@ const Home: NextPage = () => {
     const onSelectAsteroid = useCallback((id: string, isItemSelect: boolean) => {
         if (!isItemSelect) {
             setSelected(prevState => [...prevState, id])
-            localStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify([...selected, id]))
         } else {
             setSelected(prevState => prevState.filter(item => item !== id))
-            localStorage.setItem(SELECTED_ASTEROIDS, JSON.stringify(selected.filter(item => item !== id)))
         }
     }, [selected])
 
@@ -88,7 +85,7 @@ const Home: NextPage = () => {
             <main className={cls.main}>
                 <AsteroidList
                     buttonsNeeded
-                    label={'Ближайшее время подлета астероидов'}
+                    label={'Ближайшие подлеты астероидов'}
                     onChangeDistanceType={onChangeDistanceType}
                     distanceType={distanceType}
                     onSelect={onSelectAsteroid}

@@ -1,8 +1,4 @@
 .Footer {
-    position: fixed;
-    margin-top: auto;
-    bottom: 0;
-    margin-left: 33%;
     color: var(--white-color, #FFF);
     font-size: 16px;
     font-style: normal;

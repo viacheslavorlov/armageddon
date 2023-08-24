@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {memo, useState} from 'react';
 import {findClosestDate} from '../../helpers/findClosestDate';
 import {DistanceType} from '../../Model/DistanceType';
+import {CustomLink} from '../CustomLink/CustomLink';
 import cls from './AsteroidCard.module.css';
 
 interface AsteroidInterface {
@@ -31,7 +32,9 @@ const Asteroid = (props: AsteroidInterface) => {
         onSelectAsteroid?.(id, selected);
     };
 
+    const diameter = Math.round(estimated_diameter.meters.estimated_diameter_max)
     const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты';
+    const distance = Math.round(Number(distanceType === 'km' ? distanceKm : distanceLunar)) + distanceIdentifier
 
     return (
         <section data-testid={'listitem'} className={cls.AsteroidCard}>
@@ -39,14 +42,18 @@ const Asteroid = (props: AsteroidInterface) => {
             <div className={cls.asteroidData}>
                 <div className={cls.distance}>
                     <div data-testid={'distance-type'} className={cls.distanceText}>
-                        {Math.round(Number(distanceType === 'km' ? distanceKm : distanceLunar)) + distanceIdentifier}
+                        {distance}
                     </div>
                     <Image className={cls.distanceArrow} src={'/Arrow.svg'} width={130} height={5} alt={'стрелка'}/>
                 </div>
-                <Image src={'/asteroid.png'} alt={'астероид'} height={40} width={40}/>
+                <Image
+                    src={'/asteroid.png'}
+                    alt={'астероид'}
+                    height={diameter >= 100 ? 40 : 24}
+                    width={diameter >= 100 ? 36 : 22}/>
                 <div className={cls.AsteroidName}>
-                    <Link href={`/asteroid-page/${id}`} className={cls.name}>{name}</Link>
-                    <div>Ø {Math.round(estimated_diameter.meters.estimated_diameter_max)} м</div>
+                    <CustomLink href={`/asteroid-page/${id}`} label={name}className={cls.name}/>
+                    <div>Ø {diameter} м</div>
                 </div>
 
             </div>

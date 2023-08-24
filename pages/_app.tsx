@@ -1,7 +1,6 @@
 import type {AppProps} from 'next/app';
 import Image from 'next/image';
-import {memo} from 'react';
-import {Footer} from '../src/Components/Footer/Footer';
+import {memo, useRef} from 'react';
 import {Header} from '../src/Components/Header/Header';
 import {useWindowSize} from '../src/hooks/useWindowSize';
 import '../styles/globals.css';
@@ -9,30 +8,37 @@ import '../styles/globals.css';
 
 function MyAppComponent({Component, pageProps}: AppProps) {
     const [width, height] = useWindowSize();
-    const mobile = width < height;
-
+    const mobile = width < height || width < 1000;
+    const imgRef = useRef<HTMLImageElement | null>(null);
     const mobileWith = mobile ? 'mobile' : '';
+    // @ts-ignore
+    const marginLeft = imgRef?.current?.offsetWidth + width * 0.05;
     return (
         <div className={'wrap'}>
             <Header/>
             <div className={'imageWrapper ' + mobileWith}>
-                <Image className={'image'}
-                       sizes={mobile
-                           ? '(max-height: 500px) (max-width: 48px)'
-                           : '(max-height: 768px) (max-width: 536px)'
-                       }
-                       layout={'responsive'}
-                       width={mobile ? 48 : 536}
-                       height={mobile ? 436 : 620}
-                       src={
-                           mobile
-                               ? '/planeta_zemlia_mobile3.png'
-                               : '/planeta_zemlia_desktop.png'
-                       }
-                       alt={'Планета земля'}
+                <Image
+                    ref={imgRef}
+                    className={'image'}
+                    sizes={mobile
+                        ? '(max-height: 500px) (max-width: 48px)'
+                        : '(max-height: 768px) (max-width: 536px)'
+                    }
+                    layout={'responsive'}
+                    width={mobile ? 48 : 536}
+                    height={mobile ? 436 : 620}
+                    src={
+                        mobile
+                            ? '/planeta_zemlia_kosmos_small.png'
+                            : '/planeta_zemlia_desktop.png'
+                    }
+                    alt={'Планета земля'}
                 />
             </div>
-            <Component {...pageProps} />
+            <div style={{marginLeft}}>
+                <Component {...pageProps} />
+            </div>
+
         </div>
     );
 }

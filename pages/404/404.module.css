@@ -1,0 +1,19 @@
+.link {
+    margin-top: 20px;
+    display: flex;
+    height: 48px;
+    width: 200px;
+    padding: 8px 16px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-family: Helvetica, serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    gap: 4px;
+    border: none;
+    border-radius: 40px;
+    background: var(--orange-base, #F86600);
+}

@@ -1,5 +1,6 @@
+import Link from 'next/link';
+import {memo} from 'react';
 import cls from './Header.module.css';
-import { memo } from 'react';
 
 interface HeaderPrors {
     className?: string;
@@ -12,9 +13,11 @@ const HeaderU = (props: HeaderPrors) => {
 
     return (
         <div className={className + ' ' + cls.wrapper}>
-            <h1 className={cls.headerName}>ARMAGEDDON 2023</h1>
-            <div>ООО “Команда им. Б. Уиллиса”.</div>
-            <div>Взрываем астероиды с 1998 года.</div>
+            <Link className={cls.link} href={'/'}>
+                <h1 className={cls.headerName}>ARMAGEDDON 2023</h1>
+                <div>ООО “Команда им. Б. Уиллиса”.</div>
+                <div>Взрываем астероиды с 1998 года.</div>
+            </Link>
         </div>
     );
 };

@@ -1,12 +1,12 @@
 import {CloseApproachDaum} from '../Model/APIRespoyseSigleAsteroid';
 
 export function findClosestDate(dates: CloseApproachDaum[]): string | null {
-    if (dates.length === 0) {
+    if (dates?.length === 0 || !dates) {
         return null;
     }
 
     const currentDate = new Date().getTime();
-    let closestDate = dates[0].epoch_date_close_approach;
+    let closestDate;
 
     for (let i = 1; i < dates.length; i++) {
         const date = dates[i].epoch_date_close_approach;
@@ -16,6 +16,11 @@ export function findClosestDate(dates: CloseApproachDaum[]): string | null {
         }
     }
 
-    return new Date(closestDate)
-        .toLocaleDateString('ru-RU', {year: 'numeric', month: 'long', day: 'numeric'});
+    if (closestDate) {
+        return new Date(closestDate)
+            .toLocaleDateString('ru-RU', {year: 'numeric', month: 'long', day: 'numeric'});
+    } else {
+        return null;
+    }
+
 }
