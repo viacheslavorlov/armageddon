@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import {memo, useState} from 'react';
 import {findClosestDate} from '../../helpers/findClosestDate';
 import {DistanceType} from '../../Model/DistanceType';
@@ -52,7 +51,7 @@ const Asteroid = (props: AsteroidInterface) => {
                     height={diameter >= 100 ? 40 : 24}
                     width={diameter >= 100 ? 36 : 22}/>
                 <div className={cls.AsteroidName}>
-                    <CustomLink href={`/asteroid-page/${id}`} label={name}className={cls.name}/>
+                    <CustomLink href={`/asteroid-page/${id}`} label={name} className={cls.name}/>
                     <div>Ø {diameter} м</div>
                 </div>
 

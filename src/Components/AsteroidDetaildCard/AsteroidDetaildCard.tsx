@@ -4,6 +4,7 @@ import { classNames} from '../../helpers/classNames';
 import {closestDistanceFinder} from '../../helpers/closestDistanceFinder';
 import {findClosestDate} from '../../helpers/findClosestDate';
 import {APIResponseSingleAsteroidI} from '../../Model/APIRespoyseSigleAsteroid';
+import {AsteroidApproachDetails} from '../AsteroidAproachDetails/AsteroidAproachDetails';
 import cls from './AsteroidDetaildCard.module.css';
 import { memo } from 'react';
 
@@ -42,6 +43,9 @@ export const AsteroidDetailed = (props: AsteroidDetailedCardPrors) => {
                 Расстояние до земли: {closestDistance} км
             </div>
             <Link className={cls.button} href={{pathname: '/SentData', query: {selected: id, distanceType: 'km'}}}>Уничтожить этот астероид</Link>
+            {
+                close_approach_data.map(item => <AsteroidApproachDetails key={item.epoch_date_close_approach} closeApproachData={item} distanceType={'km'} />)
+            }
         </div>
     );
 };

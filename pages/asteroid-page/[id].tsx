@@ -34,6 +34,7 @@ const AsteroidPage = (props: AsteroidPagePrors) => {
                 />
             </div>
             <AsteroidDetaildCard asteroid={asteroid}/>
+
         </div>
     );
 };
