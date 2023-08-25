@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import {memo} from 'react';
+import {planetTranslator} from '../../helpers/platetTranslator';
 import {DistanceType} from '../../Model/DistanceType';
 import cls from './AsteroidApproachDetails.module.css';
 
 interface AsteroidApproachInterface {
     closeApproachData: CloseApproachData;
     distanceType: DistanceType;
-    isButtonNeeded?: boolean;
 }
 
 const AsteroidApproach = (props: AsteroidApproachInterface) => {
-    const {closeApproachData, distanceType, isButtonNeeded} = props;
+    const {closeApproachData, distanceType} = props;
     const {
         miss_distance,
         epoch_date_close_approach,
@@ -32,13 +32,17 @@ const AsteroidApproach = (props: AsteroidApproachInterface) => {
             <h2 className={cls.header}>{date}</h2>
             <div className={cls.asteroidData}>
                 <div className={cls.distance}>
+                    Ближайшее расстояние до земли
+                    <Image className={cls.distanceArrow} src={'/Arrow.svg'} width={130} height={5} alt={'стрелка'}/>
                     <div data-testid={'distance-type'} className={cls.distanceText}>
                         {distance}
                     </div>
-                    <Image className={cls.distanceArrow} src={'/Arrow.svg'} width={130} height={5} alt={'стрелка'}/>
                 </div>
                 <div>
-                    Скорость относительно земли: {speed}
+                    Скорость относительно земли: {Number.parseInt(speed)}
+                </div>
+                <div>
+                    Планета по орбите которой летит астероид: {planetTranslator(orbiting_body)}
                 </div>
             </div>
         </section>
