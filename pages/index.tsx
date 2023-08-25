@@ -4,6 +4,7 @@ import Head from 'next/head';
 import {memo, useCallback, useEffect, useState} from 'react';
 import {AsteroidList} from '../src/Components/AsteroidLIst/AsteroidList';
 import {Bucket} from '../src/Components/Bucket/Bucket';
+import ErrorBoundary from '../src/Components/ErrorBoundary/ErrorBoundary';
 import {Loader} from '../src/Components/Loader/Loader';
 import {increaseDateByDay} from '../src/helpers/increasDateByDay';
 import {DistanceType} from '../src/Model/DistanceType';
@@ -58,11 +59,11 @@ const Home: NextPage = () => {
 
     const onSelectAsteroid = useCallback((id: string, isItemSelect: boolean) => {
         if (!isItemSelect) {
-            setSelected(prevState => [...prevState, id])
+            setSelected(prevState => [...prevState, id]);
         } else {
-            setSelected(prevState => prevState.filter(item => item !== id))
+            setSelected(prevState => prevState.filter(item => item !== id));
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         fetchData();
@@ -83,14 +84,16 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <main className={cls.main}>
-                <AsteroidList
-                    buttonsNeeded
-                    label={'Ближайшие подлеты астероидов'}
-                    onChangeDistanceType={onChangeDistanceType}
-                    distanceType={distanceType}
-                    onSelect={onSelectAsteroid}
-                    asteroids={content}
-                />
+                <ErrorBoundary message={'Ошибка получения данных с сервера'}>
+                    <AsteroidList
+                        buttonsNeeded
+                        label={'Ближайшие подлеты астероидов'}
+                        onChangeDistanceType={onChangeDistanceType}
+                        distanceType={distanceType}
+                        onSelect={onSelectAsteroid}
+                        asteroids={content}
+                    />
+                </ErrorBoundary>
                 {isFetching && <Loader className={cls.loader}/>}
             </main>
             <Bucket distanceType={'lunar'} className={cls.bucket} selected={selected}/>

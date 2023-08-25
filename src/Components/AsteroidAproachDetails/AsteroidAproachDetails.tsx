@@ -22,7 +22,7 @@ const AsteroidApproach = (props: AsteroidApproachInterface) => {
         .toLocaleDateString('ru-Ru', {day: 'numeric', month: 'long', year: 'numeric'});
     const distanceKm = miss_distance.kilometers;
     const distanceLunar = miss_distance.lunar;
-    const speed = `${relative_velocity.kilometers_per_hour} км/секунду`;
+    const speed = `${Math.round(Number(relative_velocity.kilometers_per_hour))} км/секунду`;
 
     const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты';
     const distance = Math.round(Number(distanceType === 'km' ? distanceKm : distanceLunar)) + distanceIdentifier;
@@ -39,7 +39,7 @@ const AsteroidApproach = (props: AsteroidApproachInterface) => {
                     </div>
                 </div>
                 <div>
-                    Скорость относительно земли: {Number.parseInt(speed)}
+                    Скорость относительно земли: {speed}
                 </div>
                 <div>
                     Планета по орбите которой летит астероид: {planetTranslator(orbiting_body)}

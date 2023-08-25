@@ -19,7 +19,6 @@ export default async function getData(
         const result: NearEarthObject[][] = Object.values(response.data.near_earth_objects)
         const finalResult: NearEarthObject[] = [];
         result.forEach(item => finalResult.push(...item));
-        console.log('result', result);
         res.status(200).json(finalResult);
     } catch (e) {
         res.status(200).json({message: 'Server error'});

@@ -6,6 +6,7 @@ import {closestDistanceFinder} from '../../helpers/closestDistanceFinder';
 import {findClosestDate} from '../../helpers/findClosestDate';
 import {APIResponseSingleAsteroidI} from '../../Model/APIRespoyseSigleAsteroid';
 import {AsteroidApproachDetails} from '../AsteroidAproachDetails/AsteroidAproachDetails';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import cls from './AsteroidDetaildCard.module.css';
 
 interface AsteroidDetailedCardPrors {
@@ -50,14 +51,16 @@ export const AsteroidDetailed = (props: AsteroidDetailedCardPrors) => {
                 Уничтожить этот астероид
             </Link>
             <h2 className={cls.name}>Список сближений астероида с Землей</h2>
-            {close_approach_data.map(item => (
-                <AsteroidApproachDetails
-                    key={item.epoch_date_close_approach}
-                    closeApproachData={item}
-                    distanceType={'km'}
-                />
-            ))
-            }
+            <ErrorBoundary message={'Ошибка сервера'}>
+                {close_approach_data.map(item => (
+                    <AsteroidApproachDetails
+                        key={item.epoch_date_close_approach}
+                        closeApproachData={item}
+                        distanceType={'km'}
+                    />
+                ))
+                }
+            </ErrorBoundary>
         </div>
     );
 };
