@@ -1,0 +1,12 @@
+.ErrorBoundary {
+    margin-left: 50px;
+    z-index: 100;
+}
+
+.button {
+    outline: none;
+    background: var(--orange-base);
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+}

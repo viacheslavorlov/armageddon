@@ -3,7 +3,7 @@ import {memo} from 'react';
 
 interface CustomLinkPrors {
     className?: string;
-    href: string;
+    href: string | object;
     label: string;
 }
 

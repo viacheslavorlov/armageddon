@@ -1,8 +1,10 @@
 import React, {ReactNode} from 'react';
 import Link from 'next/link';
+import cls from './ErrorBoundary.module.css'
 
 interface ErrorBoundaryProps {
     children: ReactNode;
+    message: string;
 }
 
 interface ErrorBoundaryState {
@@ -23,9 +25,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     render(): React.ReactNode {
         if (this.state.hasError) {
             return (
-                <div>
+                <div className={cls.ErrorBoundary}>
                     <h2>Ой, что-то пошло не так!</h2>
-                    <button type="button" onClick={() => this.setState({ hasError: false })}>
+                    <p>{this.props.message}</p>
+                    <button className={cls.button} type="button" onClick={() => this.setState({ hasError: false })}>
                         Попробовать еще раз?
                     </button>
                     <Link href="/">Вернуться на главную</Link>

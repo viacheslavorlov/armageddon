@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Документация по запуску и развертыванию проекта "Armageddon"
 
-## Getting Started
+Этот документ описывает процесс запуска и развертывания проекта "Armageddon" на локальной машине.
 
-First, run the development server:
+### Требования
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Перед началом установки и запуска проекта убедитесь, что на вашей локальной машине установлено всё необходимое:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js (рекомендуется версия 14.x.x или выше)
+- Git
+- Любой текстовый редактор по вашему выбору (например, Visual Studio Code)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Установка
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Склонируйте репозиторий проекта с помощью команды:
+   
+    ```bash
+    git clone https://github.com/viacheslavorlov/armageddon.git
+    ```
+2. Перейдите в папку проекта:
+   ```bash
+    cd armageddon
+   ```   
+3. Установите зависимости проекта, выполнив команду:
+   ```bash
+   npm install
+   ```
+### Конфигурация (ВАЖНО!!!!)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. В папке src/consts/apiKey.ts нужно заменить `DEMO_KEY` в строке `export const API_KEY = 'DEMO_KEY';`
+   Замените  YOUR_NASA_API_KEY  на ваш API-ключ от NASA. Вы можете получить его, зарегистрировавшись на [сайте NASA](https://api.nasa.gov/).
 
-## Learn More
+### Запуск проекта
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Запустите проект с помощью команды:
+   ```bash
+   npm run dev
+   ```
+2. Откройте браузер и перейдите по адресу [http://localhost:3000](http://localhost:3000),чтобы увидеть запущенный проект "Armageddon". 
