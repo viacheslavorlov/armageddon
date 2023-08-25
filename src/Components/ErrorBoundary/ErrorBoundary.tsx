@@ -1,39 +1,40 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import Link from 'next/link';
 
-class ErrorBoundary extends React.Component {
-    constructor(props) {
-        super(props)
+interface ErrorBoundaryProps {
+    children: ReactNode;
+}
 
-        this.state = { hasError: false }
-    }
-    static getDerivedStateFromError(error) {
+interface ErrorBoundaryState {
+    hasError: boolean;
+}
 
-        return { hasError: true }
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+    constructor(props: ErrorBoundaryProps) {
+        super(props);
+        this.state = { hasError: false };
     }
-    componentDidCatch(error, errorInfo) {
-        console.log({ error, errorInfo })
+    static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+        return { hasError: true };
     }
-    render() {
+    componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+        console.log({ error, errorInfo });
+    }
+    render(): React.ReactNode {
         if (this.state.hasError) {
             return (
                 <div>
-                    <h2>Ой, что то пошло не так!</h2>
-                    <button
-                        type="button"
-                        onClick={() => this.setState({ hasError: false })}
-                    >
+                    <h2>Ой, что-то пошло не так!</h2>
+                    <button type="button" onClick={() => this.setState({ hasError: false })}>
                         Попробовать еще раз?
                     </button>
-                    <Link href={'/'} >Вернуться на главную</Link>
+                    <Link href="/">Вернуться на главную</Link>
                 </div>
-            )
+            );
         }
-
-        // Return children components in case of no error
-
-        return this.props.children
+        // Возвращаем дочерние компоненты в случае отсутствия ошибки
+        return this.props.children;
     }
 }
 
-export default ErrorBoundary
+export default ErrorBoundary;

@@ -7,7 +7,7 @@ interface CustomLinkPrors {
     label: string;
 }
 
-export const CustomLink = memo((props: CustomLinkPrors) => {
+const CustLink = (props: CustomLinkPrors) => {
     const {
         className, href, label
     } = props;
@@ -17,4 +17,6 @@ export const CustomLink = memo((props: CustomLinkPrors) => {
             {label}
         </Link>
     );
-});
+};
+
+export const CustomLink = memo(CustLink);

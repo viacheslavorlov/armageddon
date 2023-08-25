@@ -32,7 +32,7 @@ const Asteroid = (props: AsteroidInterface) => {
     };
 
     const diameter = Math.round(estimated_diameter.meters.estimated_diameter_max)
-    const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунные орбиты';
+    const distanceIdentifier = distanceType === 'km' ? ' км' : ' лунных орбит';
     const distance = Math.round(Number(distanceType === 'km' ? distanceKm : distanceLunar)) + distanceIdentifier
 
     return (
