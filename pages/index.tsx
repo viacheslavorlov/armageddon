@@ -19,9 +19,9 @@ const Home: NextPage = () => {
 
     const [distanceType, setDistanceType] = useState<DistanceType>('km');
 
-    const onChangeDistanceType = (distanceType: DistanceType) => {
+    const onChangeDistanceType = useCallback((distanceType: DistanceType) => {
         setDistanceType(distanceType);
-    };
+    }, []);
 
     const fetchData = async () => {
         setIsFetching(true);
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
         } else {
             setSelected(prevState => prevState.filter(item => item !== id))
         }
-    }, [selected])
+    }, [])
 
     useEffect(() => {
         fetchData();

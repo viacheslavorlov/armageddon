@@ -1,6 +1,6 @@
 import type {AppProps} from 'next/app';
 import Image from 'next/image';
-import {memo, useLayoutEffect, useRef, useState} from 'react';
+import {memo, useEffect, useRef, useState} from 'react';
 import {Header} from '../src/Components/Header/Header';
 import {useWindowSize} from '../src/hooks/useWindowSize';
 import '../styles/globals.css';
@@ -9,13 +9,12 @@ import '../styles/globals.css';
 function MyAppComponent({Component, pageProps}: AppProps) {
     const [width, height] = useWindowSize();
     const imgRef = useRef<HTMLImageElement | null>(null);
+    const mobile = width < height || width < 1000;
     const [marginLeft, setMarginLeft] = useState(width * 0.10)
-    const mobile = width < height || width < 860;
-
     const mobileWith = mobile ? 'mobile' : '';
-    useLayoutEffect(() => {
+    useEffect(() => {
         setMarginLeft(imgRef.current?.offsetWidth! + width * 0.05)
-    }, [])
+    }, [width])
 
     return (
         <div className={'wrap'}>
